@@ -28,7 +28,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <DataGrid Grid.Column="0" x:Name="ClientsGrid" ItemsSource="{Binding Context.Clients.Local}" SelectedItem="{Binding SelectedClient, Mode=TwoWay}">
+                <DataGrid Grid.Column="0" x:Name="ClientsGrid" ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient, Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="First name" Binding="{Binding FirstName}"/>
                         <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
@@ -70,7 +70,7 @@
                         <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding ClientInfo.LastName, Mode=TwoWay}"/>
                         <DatePicker Grid.Row="2" Grid.Column="1" Margin="3" SelectedDate="{Binding ClientInfo.Birthdate, Mode=TwoWay}"/>
                         <TextBox Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding ClientInfo.Account, Mode=TwoWay}"/>
-                        <ComboBox Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Context.Rooms.Local}" SelectedItem="{Binding ClientInfo.Room, Mode=TwoWay}">
+                        <ComboBox Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Rooms}" SelectedItem="{Binding ClientInfo.Room, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -143,7 +143,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </TextBox>
-                                <ComboBox x:Name="RnCbFilter" Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Context.Rooms.Local}" SelectedItem="{Binding ClientFilter.Room}">
+                                <ComboBox x:Name="RnCbFilter" Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Rooms}" SelectedItem="{Binding ClientFilter.Room}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock>
@@ -201,7 +201,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <DataGrid Grid.Column="0" x:Name="RoomsGrid" ItemsSource="{Binding Context.Rooms.Local}" SelectedItem="{Binding SelectedRoom, Mode=TwoWay}">
+                <DataGrid Grid.Column="0" x:Name="RoomsGrid" ItemsSource="{Binding Rooms}" SelectedItem="{Binding SelectedRoom, Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Room number" Binding="{Binding Number}"/>
                         <DataGridTextColumn Header="Room type" Binding="{Binding Type}"/>

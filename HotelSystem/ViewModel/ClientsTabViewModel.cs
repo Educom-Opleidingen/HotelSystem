@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using HotelSystem.HotelDbContext;
 using HotelSystem.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 
 namespace HotelSystem.ViewModel
@@ -36,6 +37,18 @@ namespace HotelSystem.ViewModel
         {
             Context = context;
             Context.Clients.Load();
+            Context.Rooms.Load();
+        }
+
+        public ObservableCollection<Client> Clients {  
+            get {  
+                return Context.Clients.Local.ToObservableCollection(); 
+            } 
+        }
+        public ObservableCollection<Room> Rooms { 
+            get { 
+                return Context.Rooms.Local.ToObservableCollection(); 
+            } 
         }
 
         #region Commands
@@ -187,7 +200,7 @@ namespace HotelSystem.ViewModel
             _clientsFilterChangedCommand ?? (_clientsFilterChangedCommand =
                 new RelayCommand(() =>
                 {
-                    IEnumerable<Client> queryResult = Context.Clients.Local;
+                    IEnumerable<Client> queryResult = Clients;
                     if (!string.IsNullOrEmpty(ClientFilter.FirstName))
                     {
                         queryResult = queryResult.Where(client => client.FirstName.Contains(ClientFilter.FirstName));

@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Data.Entity;
+using System.Configuration;
+using System.Linq;
 using System.Windows;
 using HotelSystem.HotelDbContext;
 using HotelSystem.Model;
@@ -19,10 +20,13 @@ namespace HotelSystem
             InitializeComponent();
             RoomTypeCb.ItemsSource = RtCbFilter.ItemsSource = Enum.GetNames(typeof(RoomTypes));
 
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<HotelContext>());
-            //Database.SetInitializer(new DropCreateDatabaseAlways<HotelContext>()); // set it if you want to recreate database
-            Context = new HotelContext();
-            //Fill(); // uncomment if you want to fill database with default values
+            Context = new HotelContext(ConfigurationManager.ConnectionStrings["HotelDbConnectionString"].ConnectionString);
+            Context.Database.EnsureCreated();
+
+            if (!Context.Rooms.Any())
+            {
+                Fill(); // Fill database with default values
+            }
             ClientsTab.DataContext = new ClientsTabViewModel(Context);
             RoomsTab.DataContext = new RoomsTabViewModel(Context);
         }
