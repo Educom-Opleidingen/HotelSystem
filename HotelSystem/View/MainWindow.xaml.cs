@@ -5,6 +5,7 @@ using System.Windows;
 using HotelSystem.HotelDbContext;
 using HotelSystem.Model;
 using HotelSystem.ViewModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelSystem
 {
@@ -20,7 +21,7 @@ namespace HotelSystem
             InitializeComponent();
 
             Context = new HotelContext(ConfigurationManager.ConnectionStrings["HotelDbConnectionString"].ConnectionString);
-            Context.Database.EnsureCreated();
+            Context.Database.Migrate();
 
             if (!Context.Rooms.Any())
             {

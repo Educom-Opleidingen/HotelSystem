@@ -17,13 +17,13 @@
     
     <TabControl>
         <!-- < Clients TAB > -->
-        <TabItem x:Name="ClientsTab" Header="Clients" d:DataContext="{d:DesignInstance d:Type=local:ClientsTabViewModel, IsDesignTimeCreatable=True}">
+        <TabItem x:Name="ClientsTab" Header="Clients">
             <view:ClientsTab/>
         </TabItem>
         <!-- </ Clients TAB > -->
 
         <!-- < Hotel room TAB > -->
-        <TabItem x:Name="RoomsTab" Header="Hotel rooms" d:DataContext="{d:DesignInstance d:Type=local:RoomsTabViewModel, IsDesignTimeCreatable=True}">
+        <TabItem x:Name="RoomsTab" Header="Hotel rooms">
             <view:RoomsTab/>
         </TabItem>
         <!-- </ Hotel room TAB > -->
