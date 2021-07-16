@@ -14,23 +14,11 @@ namespace HotelSystem.Model
         PresidentialSuite
     }
 
-    public class Room : INotifyPropertyChanged
+    public class Room : BaseModel
     {
         private RoomTypes _type;
         private string _number;
-        private int _roomId;
         private IList<Client> _clients;
-
-        public int RoomId
-        {
-            get => _roomId;
-            set
-            {
-                if (value == _roomId) return;
-                _roomId = value;
-                OnPropertyChanged();
-            }
-        }
 
         public string Number
         {
@@ -63,14 +51,6 @@ namespace HotelSystem.Model
                 _clients = value;
                 OnPropertyChanged();
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public Room()

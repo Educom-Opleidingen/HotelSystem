@@ -8,7 +8,7 @@ namespace HotelSystem.HotelDbContext
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.HasKey(person => person.PersonId);
+            builder.HasKey(person => person.Id);
             builder.Property(person => person.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(person => person.LastName).IsRequired().HasMaxLength(50);
             builder.Property(person => person.Birthdate).HasColumnType("datetime2").IsRequired(false);

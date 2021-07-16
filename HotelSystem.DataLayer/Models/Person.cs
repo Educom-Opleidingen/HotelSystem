@@ -1,27 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using HotelSystem.Annotations;
 
 namespace HotelSystem.Model
 {
-    public class Person : INotifyPropertyChanged
+    public class Person : BaseModel
     {
-        private int _personId;
         private string _firstName;
         private string _lastName;
         private DateTime? _birthdate;
-
-        public int PersonId
-        {
-            get => _personId;
-            set
-            {
-                if (value == _personId) return;
-                _personId = value;
-                OnPropertyChanged();
-            }
-        }
 
         public string FirstName
         {
@@ -56,12 +43,6 @@ namespace HotelSystem.Model
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }

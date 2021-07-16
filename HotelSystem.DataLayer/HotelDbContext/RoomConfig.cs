@@ -8,7 +8,7 @@ namespace HotelSystem.HotelDbContext
     {
         public void Configure(EntityTypeBuilder<Room> builder)
         {
-            builder.HasKey(room => room.RoomId);
+            builder.HasKey(room => room.Id);
             builder.Property(room => room.Number).IsRequired().HasMaxLength(5);
             builder.Property(room => room.Type).IsRequired();
 
