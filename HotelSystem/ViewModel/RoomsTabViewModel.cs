@@ -78,6 +78,10 @@ namespace HotelSystem.ViewModel
                     {
                         return false;
                     }
+                    if (Rooms.Any(room => room.Number == RoomInfo.Number))
+                    {
+                        return false;
+                    }
                     return true;
                 }));
 

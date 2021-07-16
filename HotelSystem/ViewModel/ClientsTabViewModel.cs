@@ -126,7 +126,7 @@ namespace HotelSystem.ViewModel
             (_exportClientsCommand = new RelayCommand(
                 () =>
                 {
-                    var clientsExport = Context.Clients.Select(client => new ClientInfo
+                    var clientsExport = Context.Clients.Select(client => new ClientExport
                     {
                         FirstName = client.FirstName,
                         LastName = client.LastName,
@@ -225,14 +225,5 @@ namespace HotelSystem.ViewModel
                 }));
 
         #endregion
-    }
-
-    internal class ClientInfo
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime Birthdate { get; set; }
-        public string Account { get; set; }
-        public string RoomNumber { get; set; }
     }
 }

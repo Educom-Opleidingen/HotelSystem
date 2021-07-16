@@ -18,7 +18,6 @@ namespace HotelSystem
         public MainWindow()
         {
             InitializeComponent();
-            RoomTypeCb.ItemsSource = RtCbFilter.ItemsSource = Enum.GetNames(typeof(RoomTypes));
 
             Context = new HotelContext(ConfigurationManager.ConnectionStrings["HotelDbConnectionString"].ConnectionString);
             Context.Database.EnsureCreated();
