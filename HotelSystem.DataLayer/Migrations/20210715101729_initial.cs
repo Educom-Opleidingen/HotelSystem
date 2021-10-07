@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelSystem.DataLayer.Migrations
 {
+#pragma warning disable IDE1006 // Naming Styles
     public partial class initial : Migration
+#pragma warning restore IDE1006 // Naming Styles
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
