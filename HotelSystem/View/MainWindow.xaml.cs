@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Linq;
 using System.Windows;
+using HotelSystem.DataLayer;
 using HotelSystem.HotelDbContext;
 using HotelSystem.Model;
 using HotelSystem.ViewModel;
@@ -27,7 +28,10 @@ namespace HotelSystem
             {
                 Fill(); // Fill database with default values
             }
-            ClientsTab.DataContext = new ClientsTabViewModel(Context);
+            ClientRepository clientRepository = new ClientRepository(Context);
+            RoomRepository roomRepository = new RoomRepository(Context);
+
+            ClientsTab.DataContext = new ClientsTabViewModel(clientRepository, roomRepository);
             RoomsTab.DataContext = new RoomsTabViewModel(Context);
         }
 

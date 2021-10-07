@@ -7,9 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using HotelSystem.HotelDbContext;
+using HotelSystem.DataLayer;
 using HotelSystem.Model;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 
 namespace HotelSystem.ViewModel
@@ -18,7 +17,8 @@ namespace HotelSystem.ViewModel
     {
         private IList<Client> _filteredClientList;
 
-        public HotelContext Context { get; }
+        public ClientRepository ClientRepository { get; }
+        public RoomRepository RoomRepository { get;  } 
         public Client ClientInfo { get; set; } = new Client();
         public Client ClientFilter { get; set; } = new Client();
         public Client SelectedClient { get; set; }
@@ -33,21 +33,27 @@ namespace HotelSystem.ViewModel
             }
         }
 
-        public ClientsTabViewModel(HotelContext context)
+        public ClientsTabViewModel(ClientRepository clientRepository, RoomRepository roomRepository)
         {
-            Context = context;
-            Context.Clients.Load();
-            Context.Rooms.Load();
+            ClientRepository = clientRepository;
+            RefreshClientList();
+
+            RoomRepository = roomRepository;
+        }
+
+        private void RefreshClientList()
+        {
+            RaisePropertyChanged(nameof(Clients));
         }
 
         public ObservableCollection<Client> Clients {  
-            get {  
-                return Context.Clients.Local.ToObservableCollection(); 
+            get {
+                return new ObservableCollection<Client>(ClientRepository.GetAllClients()); ; 
             } 
         }
         public ObservableCollection<Room> Rooms { 
-            get { 
-                return Context.Rooms.Local.ToObservableCollection(); 
+            get {
+                return new ObservableCollection<Room>(RoomRepository.GetAllRooms()); 
             } 
         }
 
@@ -66,7 +72,7 @@ namespace HotelSystem.ViewModel
             (_addClientCommand = new RelayCommand(
                 () =>
                 {
-                    Context.Clients.Add(new Client
+                    ClientRepository.StoreClient(new Client
                     {
                         FirstName = ClientInfo.FirstName,
                         LastName = ClientInfo.LastName,
@@ -74,7 +80,7 @@ namespace HotelSystem.ViewModel
                         Account = ClientInfo.Account,
                         Room = ClientInfo.Room
                     });
-                    Context.SaveChanges();
+                    RefreshClientList();
                 },
                 () =>
                 {
@@ -92,12 +98,8 @@ namespace HotelSystem.ViewModel
             (_updateClientCommand = new RelayCommand(
                 () =>
                 {
-                    SelectedClient.FirstName = ClientInfo.FirstName;
-                    SelectedClient.LastName = ClientInfo.LastName;
-                    SelectedClient.Birthdate = ClientInfo.Birthdate;
-                    SelectedClient.Account = ClientInfo.Account;
-                    SelectedClient.Room = ClientInfo.Room;
-                    Context.SaveChanges();
+                    ClientRepository.ChangeClient(SelectedClient?.Id, ClientInfo);
+                    RefreshClientList();
                 },
                 () =>
                 {
@@ -116,8 +118,8 @@ namespace HotelSystem.ViewModel
             (_deleteClientCommand = new RelayCommand(
                 () =>
                 {
-                    Context.Clients.Remove(SelectedClient);
-                    Context.SaveChanges();
+                    ClientRepository.RemoveClient(SelectedClient?.Id);
+                    RefreshClientList();
                 },
                 () => SelectedClient != null));
 
@@ -126,14 +128,16 @@ namespace HotelSystem.ViewModel
             (_exportClientsCommand = new RelayCommand(
                 () =>
                 {
-                    var clientsExport = Context.Clients.Select(client => new ClientExport
+                    var clientsExport = ClientRepository.GetAllClients()
+                                                        .Select(client => new ClientExport
                     {
                         FirstName = client.FirstName,
                         LastName = client.LastName,
-                        Birthdate = client.Birthdate.Value,
+                        Birthdate = client.Birthdate.Value, // TODO Fix bug if client has no birthday
                         Account = client.Account,
                         RoomNumber = client.Room.Number
                     });
+                    /* TODO move to seperate class */
                     var saveDialog = new SaveFileDialog
                     {
                         DefaultExt = ".xls",
@@ -150,7 +154,7 @@ namespace HotelSystem.ViewModel
                         }
                     }
                 },
-                () => Context.Clients.Count() != 0));
+                () => ClientRepository.HasClients()));
 
         public RelayCommand<object> ResetFilterClientCommand =>
             _resetFilterClientCommand ??
