@@ -48,7 +48,7 @@ namespace HotelSystem.ViewModel
 
         public ObservableCollection<Client> Clients {  
             get {
-                return new ObservableCollection<Client>(ClientRepository.GetAllClients()); ; 
+                return new ObservableCollection<Client>(ClientRepository.GetAllClients());
             } 
         }
         public ObservableCollection<Room> Rooms { 

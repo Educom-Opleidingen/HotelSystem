@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using HotelSystem.DataLayer;
 using HotelSystem.HotelDbContext;
 using HotelSystem.Model;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,8 @@ namespace HotelSystem.ViewModel
         private Room _selectedRoom;
         private IList<Room> _filteredRoomList;
 
-        public HotelContext Context { get; }
+        public RoomRepository RoomRepository { get; }
+        
         public Room RoomInfo { get; set; } = new Room();
         public Room RoomFilter { get; set; } = new Room();
         public int RoomFreedomFilterIndex { get; set; }
@@ -43,13 +45,24 @@ namespace HotelSystem.ViewModel
             }
         }
 
-        public RoomsTabViewModel(HotelContext context)
+        public RoomsTabViewModel(RoomRepository roomRepository)
         {
-            Context = context;
-            Context.Rooms.Load();
+            RoomRepository = roomRepository;
+            RoomRepository.GetAllRooms();
+        }
+        private void RefreshRoomList()
+        {
+            RaisePropertyChanged(nameof(Rooms));
         }
 
-        public ObservableCollection<Room> Rooms { get { return Context.Rooms.Local.ToObservableCollection(); } }
+
+        public ObservableCollection<Room> Rooms
+        {
+            get
+            {
+                return new ObservableCollection<Room>(RoomRepository.GetAllRooms());
+            }
+        }
 
         #region Commands
 
@@ -65,12 +78,12 @@ namespace HotelSystem.ViewModel
             (_addRoomCommand = new RelayCommand(
                 () =>
                 {
-                    Context.Rooms.Add(new Room
+                    RoomRepository.AddRoom(new Room
                     {
                         Number = RoomInfo.Number,
                         Type = RoomInfo.Type
                     });
-                    Context.SaveChanges();
+                    RefreshRoomList();
                 },
                 () =>
                 {
@@ -90,9 +103,8 @@ namespace HotelSystem.ViewModel
             (_updateRoomCommand = new RelayCommand(
                 () =>
                 {
-                    SelectedRoom.Number = RoomInfo.Number;
-                    SelectedRoom.Type = RoomInfo.Type;
-                    Context.SaveChanges();
+                    RoomRepository.ChangeRoom(SelectedRoom?.Id, RoomInfo);
+                    RefreshRoomList();
                 },
                 () =>
                 {
@@ -109,8 +121,8 @@ namespace HotelSystem.ViewModel
             (_deleteRoomCommand = new RelayCommand(
                 () =>
                 {
-                    Context.Rooms.Remove(SelectedRoom);
-                    Context.SaveChanges();
+                    RoomRepository.DeleteRoom(SelectedRoom?.Id);
+                    RefreshRoomList();
                 },
                 () => SelectedRoom != null));
 

@@ -37,6 +37,7 @@ namespace HotelSystem.Model
             set
             {
                 if (value == _type) return;
+
                 _type = value;
                 OnPropertyChanged();
             }

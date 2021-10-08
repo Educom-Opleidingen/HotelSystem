@@ -32,7 +32,7 @@ namespace HotelSystem
             RoomRepository roomRepository = new RoomRepository(Context);
 
             ClientsTab.DataContext = new ClientsTabViewModel(clientRepository, roomRepository);
-            RoomsTab.DataContext = new RoomsTabViewModel(Context);
+            RoomsTab.DataContext = new RoomsTabViewModel(roomRepository);
         }
 
         private void Fill()
