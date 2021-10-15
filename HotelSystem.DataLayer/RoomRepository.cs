@@ -7,9 +7,9 @@ using System.Text;
 
 namespace HotelSystem.DataLayer
 {
-    public class RoomRepository
+    public class RoomRepository : IRoomRepository
     {
-        public HotelContext Context { get; }
+        private HotelContext Context { get; }
 
         public RoomRepository(HotelContext hotelContext)
         {

@@ -19,7 +19,7 @@ namespace HotelSystem.ViewModel
         private Room _selectedRoom;
         private IList<Room> _filteredRoomList;
 
-        public RoomRepository RoomRepository { get; }
+        public IRoomRepository RoomRepository { get; }
         
         public Room RoomInfo { get; set; } = new Room();
         public Room RoomFilter { get; set; } = new Room();
@@ -45,7 +45,7 @@ namespace HotelSystem.ViewModel
             }
         }
 
-        public RoomsTabViewModel(RoomRepository roomRepository)
+        public RoomsTabViewModel(IRoomRepository roomRepository)
         {
             RoomRepository = roomRepository;
             RoomRepository.GetAllRooms();
