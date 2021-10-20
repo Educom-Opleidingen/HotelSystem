@@ -10,9 +10,11 @@ namespace HotelSystem.Model
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-        public int Id {
+        public int Id
+        {
             get => _id;
-            set {
+            set
+            {
                 if (value == _id) return;
                 _id = value;
                 OnPropertyChanged();

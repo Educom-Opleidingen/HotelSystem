@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace HotelSystem.Model
 {
@@ -43,6 +41,6 @@ namespace HotelSystem.Model
             }
         }
 
-        
+
     }
 }

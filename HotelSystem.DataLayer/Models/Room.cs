@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using HotelSystem.Annotations;
 
 namespace HotelSystem.Model
 {
@@ -58,5 +55,33 @@ namespace HotelSystem.Model
         {
             _clients = new List<Client>();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Room)
+            {
+                Room otherRoom = obj as Room;
+                if (otherRoom == null)
+                {
+                    return false;
+                }
+
+                if (otherRoom.Number != Number)
+                {
+                    return false;
+                }
+
+                if (otherRoom.Type != Type)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            else { return false; }
+
+
+        }
+
     }
 }

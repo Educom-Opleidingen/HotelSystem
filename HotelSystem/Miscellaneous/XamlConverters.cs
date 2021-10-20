@@ -1,8 +1,8 @@
-﻿using System;
+﻿using HotelSystem.Model;
+using System;
 using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
-using HotelSystem.Model;
 
 namespace HotelSystem.Miscellaneous
 {
@@ -10,12 +10,12 @@ namespace HotelSystem.Miscellaneous
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (int) value;
+            return (int)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (RoomTypes) value;
+            return (RoomTypes)value;
         }
     }
 

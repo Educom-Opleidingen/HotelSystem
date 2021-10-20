@@ -19,8 +19,8 @@ namespace HotelSystem.DataLayer.Migrations
                 table: "People");
 
             migrationBuilder.RenameColumn(
-                name: "RoomId", 
-                table: "Rooms", 
+                name: "RoomId",
+                table: "Rooms",
                 newName: "Id");
 
             migrationBuilder.RenameColumn(

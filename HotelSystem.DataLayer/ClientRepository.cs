@@ -1,9 +1,7 @@
 ﻿using HotelSystem.HotelDbContext;
 using HotelSystem.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HotelSystem.DataLayer
 {
@@ -18,7 +16,7 @@ namespace HotelSystem.DataLayer
 
         public bool HasClients()
         {
-            return Context.Clients.Any(); 
+            return Context.Clients.Any();
         }
 
         public IEnumerable<Client> GetAllClients()

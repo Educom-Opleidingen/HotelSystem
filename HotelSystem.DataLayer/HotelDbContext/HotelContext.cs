@@ -1,6 +1,5 @@
 ﻿using HotelSystem.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelSystem.HotelDbContext
 {

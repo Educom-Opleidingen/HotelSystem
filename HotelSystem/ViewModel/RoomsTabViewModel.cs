@@ -1,16 +1,13 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using HotelSystem.DataLayer;
+using HotelSystem.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
-using HotelSystem.DataLayer;
-using HotelSystem.HotelDbContext;
-using HotelSystem.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace HotelSystem.ViewModel
 {
@@ -20,7 +17,7 @@ namespace HotelSystem.ViewModel
         private IList<Room> _filteredRoomList;
 
         public IRoomRepository RoomRepository { get; }
-        
+
         public Room RoomInfo { get; set; } = new Room();
         public Room RoomFilter { get; set; } = new Room();
         public int RoomFreedomFilterIndex { get; set; }
@@ -144,8 +141,8 @@ namespace HotelSystem.ViewModel
                     if (parameters is Tuple<TextBox, ComboBox, ComboBox> tuple)
                     {
                         if (string.IsNullOrEmpty(tuple.Item1.Text)
-                            && (tuple.Item2 == null || new List<int> {-1, 0}.IndexOf(tuple.Item2.SelectedIndex) != -1)
-                            && (tuple.Item3 == null || new List<int> {-1, 0}.IndexOf(tuple.Item3.SelectedIndex) != -1))
+                            && (tuple.Item2 == null || new List<int> { -1, 0 }.IndexOf(tuple.Item2.SelectedIndex) != -1)
+                            && (tuple.Item3 == null || new List<int> { -1, 0 }.IndexOf(tuple.Item3.SelectedIndex) != -1))
                             return false;
                         return true;
                     }

@@ -1,15 +1,15 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using HotelSystem.DataLayer;
+using HotelSystem.Model;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.CommandWpf;
-using HotelSystem.DataLayer;
-using HotelSystem.Model;
-using Microsoft.Win32;
 
 namespace HotelSystem.ViewModel
 {
@@ -18,7 +18,7 @@ namespace HotelSystem.ViewModel
         private IList<Client> _filteredClientList;
 
         public ClientRepository ClientRepository { get; }
-        public RoomRepository RoomRepository { get;  } 
+        public RoomRepository RoomRepository { get; }
         public Client ClientInfo { get; set; } = new Client();
         public Client ClientFilter { get; set; } = new Client();
         public Client SelectedClient { get; set; }
@@ -46,15 +46,19 @@ namespace HotelSystem.ViewModel
             RaisePropertyChanged(nameof(Clients));
         }
 
-        public ObservableCollection<Client> Clients {  
-            get {
+        public ObservableCollection<Client> Clients
+        {
+            get
+            {
                 return new ObservableCollection<Client>(ClientRepository.GetAllClients());
-            } 
+            }
         }
-        public ObservableCollection<Room> Rooms { 
-            get {
-                return new ObservableCollection<Room>(RoomRepository.GetAllRooms()); 
-            } 
+        public ObservableCollection<Room> Rooms
+        {
+            get
+            {
+                return new ObservableCollection<Room>(RoomRepository.GetAllRooms());
+            }
         }
 
         #region Commands
@@ -130,13 +134,13 @@ namespace HotelSystem.ViewModel
                 {
                     var clientsExport = ClientRepository.GetAllClients()
                                                         .Select(client => new ClientExport
-                    {
-                        FirstName = client.FirstName,
-                        LastName = client.LastName,
-                        Birthdate = client.Birthdate.Value, // TODO Fix bug if client has no birthday
-                        Account = client.Account,
-                        RoomNumber = client.Room.Number
-                    });
+                                                        {
+                                                            FirstName = client.FirstName,
+                                                            LastName = client.LastName,
+                                                            Birthdate = client.Birthdate.Value, // TODO Fix bug if client has no birthday
+                                                            Account = client.Account,
+                                                            RoomNumber = client.Room.Number
+                                                        });
                     /* TODO move to seperate class */
                     var saveDialog = new SaveFileDialog
                     {

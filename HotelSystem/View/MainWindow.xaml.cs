@@ -1,12 +1,12 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
-using System.Windows;
-using HotelSystem.DataLayer;
+﻿using HotelSystem.DataLayer;
 using HotelSystem.HotelDbContext;
 using HotelSystem.Model;
 using HotelSystem.ViewModel;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Configuration;
+using System.Linq;
+using System.Windows;
 
 namespace HotelSystem
 {
