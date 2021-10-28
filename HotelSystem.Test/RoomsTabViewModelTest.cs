@@ -184,7 +184,7 @@ namespace HotelSystem.Test
         }
 
         [Test]
-        public void TestChangeRoom()
+        public void TestChangeRoom_ChangedRoom()
         {
             // prepare 
             CreateDefaultRooms();
@@ -208,6 +208,24 @@ namespace HotelSystem.Test
             // Second validate
             Assert.IsTrue(repository.Rooms.Contains(selectedRoom)); // werkt wel, klopt niet als een check. bespreken met Jeroen
             AssertPropertyChanged(nameof(rtvm.Rooms));
+        }
+
+        [Test]
+        public void TestChangeRoom_NoChanges()
+        {
+            // prepare 
+            CreateDefaultRooms();
+            var selectedRoom = repository.Rooms[0];
+            rtvm.SelectedRoom = selectedRoom;
+            propertyChanges.Clear();
+
+            // run
+            var change = rtvm.UpdateRoomCommand;
+            var result = change.CanExecute(null);
+
+            // validate
+            Assert.IsFalse(result);
+
         }
 
         [Test]
