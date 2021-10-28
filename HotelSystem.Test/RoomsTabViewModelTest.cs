@@ -183,26 +183,43 @@ namespace HotelSystem.Test
             AssertPropertyChanged(nameof(rtvm.Rooms));
         }
 
-
-
-
-
-
-
-
-
-
         [Test]
         public void TestChangeRoom()
         {
             // prepare 
-
+            CreateDefaultRooms();
+            Room newRoomInfo = new Room() { Number = "124", Type = RoomTypes.StandardRoom };
+            var selectedRoom = repository.Rooms[0];
+            rtvm.SelectedRoom = selectedRoom;
+            propertyChanges.Clear();
 
             // run
-
-
+            rtvm.RoomInfo = newRoomInfo;
+            
+            var change = rtvm.UpdateRoomCommand;
+            var result = change.CanExecute(null);
 
             // validate
+            Assert.IsTrue(result);
+
+            // Second run
+            change.Execute(null);
+
+            // Second validate
+            Assert.IsTrue(repository.Rooms.Contains(selectedRoom)); // werkt wel, klopt niet als een check. bespreken met Jeroen
+            AssertPropertyChanged(nameof(rtvm.Rooms));
+        }
+
+        [Test]
+        public void TestHasRooms()
+        {
+            // prepare 
+            CreateDefaultRooms();
+
+            // run
+            // in rtvm zit geen functie die checkt of er Rooms zijn, er bestaat wel een HasRooms functie in de repo. Welke beschikbaar is via de IRepo
+            // validate
+            Assert.IsTrue(repository.HasRooms());
         }
     }
 }

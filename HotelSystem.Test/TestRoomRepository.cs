@@ -1,6 +1,7 @@
 ﻿using HotelSystem.DataLayer;
 using HotelSystem.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HotelSystem.Test
 {
@@ -19,7 +20,14 @@ namespace HotelSystem.Test
         }
         public void ChangeRoom(int? roomId, Room updatedInfo)
         {
-            throw new System.NotImplementedException();
+            Room selectedRoom = Rooms.Find(r => r.Id == roomId);
+            updatedInfo.Id = selectedRoom.Id;
+            selectedRoom.Number = updatedInfo.Number;
+            selectedRoom.Type = updatedInfo.Type;
+
+            Rooms.Remove(selectedRoom);
+            Rooms.Add(updatedInfo);
+            
         }
         public IEnumerable<Room> GetAllRooms()
         {
@@ -28,7 +36,11 @@ namespace HotelSystem.Test
 
         public bool HasRooms()
         {
-            throw new System.NotImplementedException();
+            if (Rooms.Count > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
