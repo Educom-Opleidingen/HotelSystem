@@ -184,6 +184,47 @@ namespace HotelSystem.Test
         }
 
         [Test]
+        public void TestDeleteRoom_RoomDoesNotExist()
+        {
+            // prepare 
+            CreateDefaultRooms();
+
+            var unSelectedRoom = new Room { Id = 999, Number = "666", Type = RoomTypes.PresidentialSuite };
+            rtvm.SelectedRoom = unSelectedRoom;
+            propertyChanges.Clear();
+
+            // run
+            var del = rtvm.DeleteRoomCommand;
+            var result = del.CanExecute(null);
+
+            // validate
+            Assert.IsFalse(result);
+        }
+
+
+        [Test]
+        public void TestChangeRoom_RoomUnknown()
+        {
+            // prepare 
+            CreateDefaultRooms();
+            Room changedRoom = new Room() {Id = 999, Number = "666", Type = RoomTypes.StandardRoom };
+
+            var unSelectedRoom = new Room { Id = 999, Number ="656", Type = RoomTypes.JuniorSuite };
+            rtvm.SelectedRoom = unSelectedRoom;
+            propertyChanges.Clear();
+            // run
+            rtvm.RoomInfo = changedRoom;
+
+            var update = rtvm.UpdateRoomCommand;
+            var result = update.CanExecute(null);
+
+            // validate 
+            Assert.IsFalse(result);
+
+        }
+
+
+        [Test]
         public void TestChangeRoom_ChangedRoom()
         {
             // prepare 
@@ -206,8 +247,37 @@ namespace HotelSystem.Test
             change.Execute(null);
 
             // Second validate
-            Assert.IsTrue(repository.Rooms.Contains(selectedRoom)); // werkt wel, klopt niet als een check. bespreken met Jeroen
+            Assert.AreEqual(new Room { Number="124", Type = RoomTypes.StandardRoom}, repository.Rooms[0]); // werkt wel, klopt niet als een check. bespreken met Jeroen
             AssertPropertyChanged(nameof(rtvm.Rooms));
+        }
+
+        [Test]
+        public void TestChangeRoom_ChangedRoom_NumberAndType()
+        {
+            // prepare 
+            CreateDefaultRooms();
+            Room newRoomInfo = new Room() { Number = "124", Type = RoomTypes.JuniorSuite };
+            var selectedRoom = repository.Rooms[2];
+            rtvm.SelectedRoom = selectedRoom;
+            propertyChanges.Clear();
+
+            // run
+            rtvm.RoomInfo = newRoomInfo;
+
+            var change = rtvm.UpdateRoomCommand;
+            var result = change.CanExecute(null);
+
+            // validate
+            Assert.IsTrue(result);
+
+            // Second run
+            change.Execute(null);
+
+            // Second validate
+            Assert.AreEqual(new Room { Number = "124", Type = RoomTypes.JuniorSuite }, repository.Rooms[2]); // werkt wel, klopt niet als een check. bespreken met Jeroen
+            AssertPropertyChanged(nameof(rtvm.Rooms));
+
+            Assert.IsFalse(repository.Rooms.Contains(new Room { Number = "789", Type = RoomTypes.PresidentialSuite}));
         }
 
         [Test]
@@ -229,15 +299,23 @@ namespace HotelSystem.Test
         }
 
         [Test]
-        public void TestHasRooms()
+        public void TestChangeRoom_DuplicateData()
         {
             // prepare 
             CreateDefaultRooms();
+            Room newRoomInfo = new Room() { Number = "123", Type = RoomTypes.StandardRoom };
+            var selectedRoom = repository.Rooms[0];
+            rtvm.SelectedRoom = selectedRoom;
+            propertyChanges.Clear();
 
             // run
-            // in rtvm zit geen functie die checkt of er Rooms zijn, er bestaat wel een HasRooms functie in de repo. Welke beschikbaar is via de IRepo
+            rtvm.RoomInfo = newRoomInfo;
+
+            var change = rtvm.UpdateRoomCommand;
+            var result = change.CanExecute(null);
+
             // validate
-            Assert.IsTrue(repository.HasRooms());
+            Assert.IsFalse(result);
         }
     }
 }

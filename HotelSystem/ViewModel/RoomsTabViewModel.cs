@@ -100,13 +100,24 @@ namespace HotelSystem.ViewModel
             (_updateRoomCommand = new RelayCommand(
                 () =>
                 {
-                    RoomRepository.ChangeRoom(SelectedRoom?.Id, RoomInfo);
+                    RoomRepository.ChangeRoom(SelectedRoom.Id, RoomInfo);
                     RefreshRoomList();
                 },
                 () =>
                 {
-                    if (SelectedRoom == null) return false;
+                    if (SelectedRoom == null)
+                    {
+                        return false;
+                    }
                     if (string.IsNullOrEmpty(RoomInfo.Number) || RoomInfo.Type == RoomTypes.None)
+                    {
+                        return false;
+                    }
+                    if (SelectedRoom.Equals(RoomInfo))
+                    { 
+                        return false;
+                    }
+                    if (!Rooms.Any(room => room.Id == SelectedRoom.Id))
                     {
                         return false;
                     }
@@ -118,10 +129,23 @@ namespace HotelSystem.ViewModel
             (_deleteRoomCommand = new RelayCommand(
                 () =>
                 {
-                    RoomRepository.DeleteRoom(SelectedRoom?.Id);
+                    RoomRepository.DeleteRoom(SelectedRoom.Id);
                     RefreshRoomList();
                 },
-                () => SelectedRoom != null));
+                () =>
+                {
+                    if (SelectedRoom == null)
+                    {
+                        return false;
+                    }
+
+                    if (!Rooms.Any(room => room.Id == SelectedRoom.Id))
+                    {
+                        return false;
+                    }
+                    return true;
+                    }));
+
 
         public RelayCommand<object> ResetFilterRoomCommand =>
             _resetFilterRoomCommand ??

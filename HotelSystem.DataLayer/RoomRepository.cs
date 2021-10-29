@@ -13,10 +13,6 @@ namespace HotelSystem.DataLayer
         {
             Context = hotelContext;
         }
-        public bool HasRooms()
-        {
-            return Context.Rooms.Any();
-        }
 
         public IEnumerable<Room> GetAllRooms()
         {
@@ -29,7 +25,7 @@ namespace HotelSystem.DataLayer
             Context.SaveChanges();
         }
 
-        public void ChangeRoom(int? roomId, Room updatedInfo)
+        public void ChangeRoom(int roomId, Room updatedInfo)
         {
             Room selectedRoom = GetRoom(roomId);
 
@@ -39,24 +35,20 @@ namespace HotelSystem.DataLayer
             Context.SaveChanges();
         }
 
-        public void DeleteRoom(int? roomId)
+        public void DeleteRoom(int roomId)
         {
             Room selectedRoom = GetRoom(roomId);
             Context.Remove(selectedRoom);
             Context.SaveChanges();
         }
 
-        private Room GetRoom(int? roomId)
+        private Room GetRoom(int roomId)
         {
-            if (!roomId.HasValue)
-            {
-                throw new DataLayerException("No room selected");
-            }
-            Room SelectedRoom = Context.Rooms.Find(roomId.Value);
+            Room SelectedRoom = Context.Rooms.Find(roomId);
 
             if (SelectedRoom == null)
             {
-                throw new DataLayerException(string.Format("Room with id {0} not found", roomId.Value));
+                throw new DataLayerException(string.Format("Room with id {0} not found", roomId));
             }
 
             return SelectedRoom;
