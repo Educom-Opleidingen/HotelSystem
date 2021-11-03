@@ -78,10 +78,22 @@ namespace HotelSystem.Model
 
                 return true;
             }
-            else { return false; }
-
-
+            else 
+            { 
+                return false; 
+            }
         }
+        public override int GetHashCode()
+        {
+            int hash = base.GetHashCode();
 
+            unchecked // Overflow is fine, just wrap
+            {
+                // Suitable nullity checks etc, of course :)
+                hash = hash * 839 + Number?.GetHashCode() ?? 2515;
+                hash = hash * 273 + Type.GetHashCode() ;
+            }
+            return hash;
+        }
     }
 }

@@ -57,12 +57,7 @@ namespace HotelSystem.Test
             }
         }
 
-        private void CreateDefaultRooms()
-        {
-            repository.Rooms.Add(new Room() { Id = 5, Number = "123", Type = RoomTypes.StandardRoom });
-            repository.Rooms.Add(new Room() { Id = 6, Number = "456", Type = RoomTypes.JuniorSuite });
-            repository.Rooms.Add(new Room() { Id = 7, Number = "789", Type = RoomTypes.PresidentialSuite });
-        }
+       
         #endregion
 
         [Test]
@@ -106,7 +101,7 @@ namespace HotelSystem.Test
             // prepare
             Room testRoom = new Room() { Number = "123", Type = RoomTypes.StandardRoom };
 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
             // run
             rtvm.RoomInfo = testRoom;
 
@@ -123,7 +118,7 @@ namespace HotelSystem.Test
             // prepare
             Room testRoom = new Room() { Number = "007", Type = RoomTypes.StandardRoom };
 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
 
             // run
             rtvm.RoomInfo = testRoom;
@@ -146,7 +141,7 @@ namespace HotelSystem.Test
         public void TestDeleteRoom_NoRoomsSelected()
         {
             // prepare 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
 
             // run
             var del = rtvm.DeleteRoomCommand;
@@ -161,7 +156,7 @@ namespace HotelSystem.Test
         public void TestDeleteRoom_RoomsSelected()
         {
             // prepare 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
 
             var selectedRoom = repository.Rooms[0];
             rtvm.SelectedRoom = selectedRoom;
@@ -187,7 +182,7 @@ namespace HotelSystem.Test
         public void TestDeleteRoom_RoomDoesNotExist()
         {
             // prepare 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
 
             var unSelectedRoom = new Room { Id = 999, Number = "666", Type = RoomTypes.PresidentialSuite };
             rtvm.SelectedRoom = unSelectedRoom;
@@ -206,7 +201,7 @@ namespace HotelSystem.Test
         public void TestChangeRoom_RoomUnknown()
         {
             // prepare 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
             Room changedRoom = new Room() {Id = 999, Number = "666", Type = RoomTypes.StandardRoom };
 
             var unSelectedRoom = new Room { Id = 999, Number ="656", Type = RoomTypes.JuniorSuite };
@@ -228,7 +223,7 @@ namespace HotelSystem.Test
         public void TestChangeRoom_ChangedRoom()
         {
             // prepare 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
             Room newRoomInfo = new Room() { Number = "124", Type = RoomTypes.StandardRoom };
             var selectedRoom = repository.Rooms[0];
             rtvm.SelectedRoom = selectedRoom;
@@ -255,7 +250,7 @@ namespace HotelSystem.Test
         public void TestChangeRoom_ChangedRoom_NumberAndType()
         {
             // prepare 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
             Room newRoomInfo = new Room() { Number = "124", Type = RoomTypes.JuniorSuite };
             var selectedRoom = repository.Rooms[2];
             rtvm.SelectedRoom = selectedRoom;
@@ -284,7 +279,7 @@ namespace HotelSystem.Test
         public void TestChangeRoom_NoChanges()
         {
             // prepare 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
             var selectedRoom = repository.Rooms[0];
             rtvm.SelectedRoom = selectedRoom;
             propertyChanges.Clear();
@@ -302,7 +297,7 @@ namespace HotelSystem.Test
         public void TestChangeRoom_DuplicateData()
         {
             // prepare 
-            CreateDefaultRooms();
+            repository.CreateDefaultRooms();
             Room newRoomInfo = new Room() { Number = "123", Type = RoomTypes.StandardRoom };
             var selectedRoom = repository.Rooms[0];
             rtvm.SelectedRoom = selectedRoom;

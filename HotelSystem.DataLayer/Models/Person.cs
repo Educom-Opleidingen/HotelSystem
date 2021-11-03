@@ -41,6 +41,41 @@ namespace HotelSystem.Model
             }
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is Person)
+            {
+                Person otherPerson = obj as Person;
+                if (otherPerson == null)
+                {
+                    return false;
+                }
 
+                if (otherPerson.FirstName != FirstName && otherPerson.LastName != LastName && otherPerson.Birthdate != Birthdate)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            else 
+            { 
+                return false; 
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = base.GetHashCode();
+
+            unchecked // Overflow is fine, just wrap
+            {
+                // Suitable nullity checks etc, of course :)
+                hash = hash * 5039 + FirstName?.GetHashCode() ?? 4615;
+                hash = hash * 883 + LastName?.GetHashCode() ?? 5863;
+                hash = hash * 9719 + Birthdate.GetHashCode();
+            }
+            return hash;
+        }
     }
 }

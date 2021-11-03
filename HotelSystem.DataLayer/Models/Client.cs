@@ -26,5 +26,50 @@
                 OnPropertyChanged();
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Client)
+            {
+                Client otherClient = obj as Client;
+                if (otherClient == null)
+                {
+                    return false;
+                }
+
+                if (!base.Equals(obj))
+                {
+                    return false;
+                }
+
+                if (otherClient.Account != Account)
+                {
+                    return false;
+                }
+
+                if (!Equals(Room, otherClient.Room))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            else 
+            { 
+                return false; 
+            }
+        }
+        public override int GetHashCode()
+        {
+            int hash = base.GetHashCode();
+
+            unchecked // Overflow is fine, just wrap
+            {
+                // Suitable nullity checks etc, of course :)
+                hash = hash * 6439 + Account?.GetHashCode() ?? 2515;
+                hash = hash * 973 + Room?.GetHashCode() ?? 9663;
+            }
+            return hash;
+        }
     }
 }

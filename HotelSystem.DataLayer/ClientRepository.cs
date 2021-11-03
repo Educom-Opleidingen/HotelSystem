@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace HotelSystem.DataLayer
 {
-    public class ClientRepository
+    public class ClientRepository : IClientRepository
     {
         public HotelContext Context { get; }
 

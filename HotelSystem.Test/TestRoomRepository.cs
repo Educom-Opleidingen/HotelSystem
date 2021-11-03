@@ -36,5 +36,12 @@ namespace HotelSystem.Test
         {
             return Rooms;
         }
+
+        public void CreateDefaultRooms()
+        {
+            Rooms.Add(new Room() { Id = 5, Number = "123", Type = RoomTypes.StandardRoom });
+            Rooms.Add(new Room() { Id = 6, Number = "456", Type = RoomTypes.JuniorSuite });
+            Rooms.Add(new Room() { Id = 7, Number = "789", Type = RoomTypes.PresidentialSuite });
+        }
     }
 }

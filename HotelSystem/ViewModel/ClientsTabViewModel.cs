@@ -17,8 +17,8 @@ namespace HotelSystem.ViewModel
     {
         private IList<Client> _filteredClientList;
 
-        public ClientRepository ClientRepository { get; }
-        public RoomRepository RoomRepository { get; }
+        public IClientRepository ClientRepository { get; }
+        public IRoomRepository RoomRepository { get; }
         public Client ClientInfo { get; set; } = new Client();
         public Client ClientFilter { get; set; } = new Client();
         public Client SelectedClient { get; set; }
@@ -33,7 +33,8 @@ namespace HotelSystem.ViewModel
             }
         }
 
-        public ClientsTabViewModel(ClientRepository clientRepository, RoomRepository roomRepository)
+
+        public ClientsTabViewModel(IClientRepository clientRepository, IRoomRepository roomRepository)
         {
             ClientRepository = clientRepository;
             RefreshClientList();
