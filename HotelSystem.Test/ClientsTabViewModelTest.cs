@@ -85,9 +85,8 @@ namespace HotelSystem.Test
         [Test]
         public void TestAddClient()
         {
-            // prepare            
-            Client testClient = new Client() { Id = 8, FirstName = "Pietje", LastName = "Puk", Birthdate = new DateTime(1914, 11, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] };
-            
+            // prepare
+            Client testClient = new Client() { Id = 20, FirstName = "Nina", LastName = "de Ruiter", Birthdate = new DateTime(2012, 04, 04), Account = "BlokkenBouwClub", Room = roomRepository.Rooms[0] };
 
             // run
             ctvm.ClientInfo = testClient;
@@ -124,18 +123,118 @@ namespace HotelSystem.Test
         [Test]
         public void TestAddClientDuplicateClient()
         {
-            // prepare 
+            // prepare
+            CreateDefaultClients();
 
+            Client testClient = new Client() { Id = 8, FirstName = "Pietje", LastName = "Puk", Birthdate = new DateTime(1914, 11, 24), Account = "PukDynasty", Room = roomRepository.Rooms[2] };
+            var selectedClient = clientRepository.Clients[0];
+            ctvm.SelectedClient = selectedClient;
+            propertyChanges.Clear();
 
             // run
+            ctvm.ClientInfo = testClient;
 
+            var add = ctvm.AddClientCommand;
+            var result = add.CanExecute(null);
 
             // validate
+            Assert.IsFalse(result);
+
 
 
         }
 
+        [Test]
+        public void TestChangeClient_ChangedDataLastNameAndBirthDate()
+        {
+            // prepare
+            CreateDefaultClients();
+
+            Client newClientInfo = new Client() { Id = 8, FirstName = "Pietje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] };
+            var selectedClient = clientRepository.Clients[0];
+            ctvm.SelectedClient = selectedClient;
+            propertyChanges.Clear();
+
+            // run
+            ctvm.ClientInfo = newClientInfo;
+
+            var change = ctvm.UpdateClientCommand;
+            var result = change.CanExecute(null);
+
+            // validate 
+            Assert.IsTrue(result);
+
+            // Second run
+            change.Execute(null);
+
+            // Second validate
+            Assert.AreEqual(new Client() { Id = 8, FirstName = "Pietje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] },clientRepository.Clients[0]); 
+            AssertPropertyChanged(nameof(ctvm.Clients));
 
 
+        }
+
+        [Test]
+        public void TestChangeClient_DuplicateData()
+        {
+            // prepare
+            CreateDefaultClients();
+
+            Client newClientInfo = new Client() { Id = 8, FirstName = "Pietje", LastName = "Puk", Birthdate = new DateTime(1914, 11, 24), Account = "PukDynasty", Room = roomRepository.Rooms[2] };
+            var selectedClient = clientRepository.Clients[0];
+
+            ctvm.SelectedClient = selectedClient;
+            propertyChanges.Clear();
+
+            // run
+            ctvm.ClientInfo = newClientInfo;
+
+            var change = ctvm.UpdateClientCommand;
+            var result = change.CanExecute(null);
+
+            // validate
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void TestChangeClient_ClientUnknown()
+        {
+            // prepare
+            CreateDefaultClients();
+
+            Client changedClientInfo = new Client() { Id = 50, FirstName = "Jantje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] };
+            var unSelectedClient = new Client() { Id = 50, FirstName = "Elsje", LastName = "Schaap", Birthdate = new DateTime(1914, 03, 24), Account = "PukDynasty", Room = roomRepository.Rooms[1] };
+            ctvm.SelectedClient = unSelectedClient;
+            propertyChanges.Clear();
+
+            // run
+            ctvm.ClientInfo = changedClientInfo;
+
+            var change = ctvm.UpdateClientCommand;
+            var result = change.CanExecute(null);
+
+            // validate
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void TestChangeClient_NoChanges()
+        {
+            // prepare
+            CreateDefaultClients();
+
+            var selectedClient = clientRepository.Clients[0];
+            ctvm.SelectedClient = selectedClient;
+            propertyChanges.Clear();
+
+            // run
+            var change = ctvm.UpdateClientCommand;
+            var result = change.CanExecute(null);
+
+            // validate
+            Assert.IsFalse(result);
+
+
+        }
     }
 }

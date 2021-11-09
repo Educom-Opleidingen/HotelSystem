@@ -95,6 +95,11 @@ namespace HotelSystem.ViewModel
                     {
                         return false;
                     }
+
+                    if(SelectedClient.Equals(ClientInfo))
+                    {
+                        return false;
+                    }
                     return true;
                 }));
 
@@ -108,10 +113,24 @@ namespace HotelSystem.ViewModel
                 },
                 () =>
                 {
-                    if (SelectedClient == null) return false;
+                    if (SelectedClient == null)
+                    {
+                        return false;
+                    }
+
                     if (string.IsNullOrEmpty(ClientInfo.FirstName)
                         || string.IsNullOrEmpty(ClientInfo.LastName)
                         || ClientInfo.Room == null)
+                    {
+                        return false;
+                    }
+
+                    if (SelectedClient.Equals(ClientInfo))
+                    {
+                        return false;
+                    }
+
+                    if (!Clients.Any(client => client.Id == SelectedClient.Id))
                     {
                         return false;
                     }
