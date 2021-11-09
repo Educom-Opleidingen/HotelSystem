@@ -47,10 +47,7 @@
                     return false;
                 }
 
-                if (!Equals(Room, otherClient.Room))
-                {
-                    return false;
-                }
+                
 
                 return true;
             }
@@ -58,6 +55,21 @@
             { 
                 return false; 
             }
+        }
+
+        public bool EqualsIncludingRoom(Client otherClient)
+        {
+            if (!Equals(otherClient))
+            {
+                return false;
+            }
+
+            if (!Equals(Room, otherClient.Room))
+            {
+                return false;
+            }
+
+            return true;
         }
         public override int GetHashCode()
         {

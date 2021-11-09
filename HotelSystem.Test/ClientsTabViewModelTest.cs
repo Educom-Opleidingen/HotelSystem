@@ -76,10 +76,21 @@ namespace HotelSystem.Test
         public void TestFilteredClientList()
         {
             // prepare 
+            CreateDefaultClients();
+            ctvm.ClientFilter.FirstName = "P";
+
 
             // run
+            var filter = ctvm.ClientsFilterChangedCommand;
+            filter.Execute(null);
+
+            var result = ctvm.FilteredClientList.ToList();
 
             // validate
+            Assert.Contains(clientRepository.Clients[0], result);
+            Assert.AreEqual(1, result.Count());
+            AssertPropertyChanged(nameof(ctvm.FilteredClientList));
+
         }
 
         [Test]

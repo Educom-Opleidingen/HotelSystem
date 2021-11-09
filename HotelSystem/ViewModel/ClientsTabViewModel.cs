@@ -17,9 +17,19 @@ namespace HotelSystem.ViewModel
     {
         private IList<Client> _filteredClientList;
 
+        private Client _clientInfo = new Client();
+
         public IClientRepository ClientRepository { get; }
         public IRoomRepository RoomRepository { get; }
-        public Client ClientInfo { get; set; } = new Client();
+        public Client ClientInfo 
+        { 
+            get => _clientInfo; 
+            set 
+                { 
+                    _clientInfo = value;
+                    _addClientCommand.RaiseCanExecuteChanged(); 
+                } 
+        }
         public Client ClientFilter { get; set; } = new Client();
         public Client SelectedClient { get; set; }
 
@@ -71,6 +81,7 @@ namespace HotelSystem.ViewModel
         private RelayCommand<object> _resetFilterClientCommand;
         private RelayCommand _clientsGridSelectionChangedCommand;
         private RelayCommand _clientsFilterChangedCommand;
+        
 
         public ICommand AddClientCommand =>
             _addClientCommand ??
@@ -99,7 +110,7 @@ namespace HotelSystem.ViewModel
                     {
                         return false;
                     }
-                   
+
                     return true;
                 }));
 
@@ -231,11 +242,17 @@ namespace HotelSystem.ViewModel
                     IEnumerable<Client> queryResult = Clients;
                     if (!string.IsNullOrEmpty(ClientFilter.FirstName))
                     {
-                        queryResult = queryResult.Where(client => client.FirstName.Contains(ClientFilter.FirstName));
+                        //var firstName = ClientFilter.FirstName.ToLowerInvariant();
+                        //queryResult = queryResult.Where(client => client.FirstName.ToLowerInvariant().Contains(firstName));
+
+                        queryResult = queryResult.Where(client => client.FirstName.IndexOf(ClientFilter.FirstName, StringComparison.CurrentCultureIgnoreCase) >= 0);
                     }
                     if (!string.IsNullOrEmpty(ClientFilter.LastName))
                     {
-                        queryResult = queryResult.Where(client => client.LastName.Contains(ClientFilter.LastName));
+                        //var lastName = ClientFilter.LastName.ToLowerInvariant();
+                        //queryResult = queryResult.Where(client => client.LastName.Contains(lastName));
+
+                        queryResult = queryResult.Where(client => client.LastName.IndexOf(ClientFilter.LastName, StringComparison.CurrentCultureIgnoreCase) >= 0);
                     }
                     if (ClientFilter.Birthdate != null)
                     {
@@ -243,7 +260,10 @@ namespace HotelSystem.ViewModel
                     }
                     if (!string.IsNullOrEmpty(ClientFilter.Account))
                     {
-                        queryResult = queryResult.Where(client => client.Account.Contains(ClientFilter.Account));
+                        //var account = ClientFilter.Account.ToLowerInvariant();
+                        //queryResult = queryResult.Where(client => client.Account.Contains(account));
+
+                        queryResult = queryResult.Where(client => client.Account.IndexOf(ClientFilter.Account, StringComparison.CurrentCultureIgnoreCase) >= 0);
                     }
                     if (ClientFilter.Room != null)
                     {
