@@ -95,11 +95,11 @@ namespace HotelSystem.ViewModel
                     {
                         return false;
                     }
-
-                    if(SelectedClient.Equals(ClientInfo))
+                    if (Clients.Any(client => client.Equals(ClientInfo)))
                     {
                         return false;
                     }
+                   
                     return true;
                 }));
 
