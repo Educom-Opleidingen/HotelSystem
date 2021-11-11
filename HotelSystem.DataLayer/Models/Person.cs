@@ -51,7 +51,7 @@ namespace HotelSystem.Model
                     return false;
                 }
 
-                if (otherPerson.FirstName != FirstName && otherPerson.LastName != LastName && otherPerson.Birthdate != Birthdate)
+                if (otherPerson.FirstName != FirstName || otherPerson.LastName != LastName || otherPerson.Birthdate != Birthdate)
                 {
                     return false;
                 }

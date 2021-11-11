@@ -24,11 +24,12 @@ namespace HotelSystem.ViewModel
         public Client ClientInfo 
         { 
             get => _clientInfo; 
-            set 
-                { 
-                    _clientInfo = value;
-                    _addClientCommand.RaiseCanExecuteChanged(); 
-                } 
+            set
+            {
+                _clientInfo = value;
+                (AddClientCommand as RelayCommand).RaiseCanExecuteChanged(); 
+                
+            } 
         }
         public Client ClientFilter { get; set; } = new Client();
         public Client SelectedClient { get; set; }
