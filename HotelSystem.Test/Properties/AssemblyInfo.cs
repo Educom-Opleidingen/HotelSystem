@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dynalinq BV")]
-[assembly: AssemblyProduct("HotelSystem.Test2")]
+[assembly: AssemblyProduct("HotelSystem.Test")]
 [assembly: AssemblyCopyright("Copyright © Dynalinq BV 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
