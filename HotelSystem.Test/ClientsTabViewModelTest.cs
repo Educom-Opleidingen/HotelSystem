@@ -5,6 +5,7 @@ using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 
 
@@ -14,6 +15,7 @@ namespace HotelSystem.Test
     {
         private TestClientRepository clientRepository;
         private TestRoomRepository roomRepository;
+        private TestStandardDialog standardDialog;
         private ClientsTabViewModel ctvm;
 
         #region PropertyChanges
@@ -49,7 +51,8 @@ namespace HotelSystem.Test
         {
             clientRepository = new TestClientRepository();
             roomRepository = new TestRoomRepository();
-            ctvm = new ClientsTabViewModel(clientRepository, roomRepository);
+            standardDialog = new TestStandardDialog();
+            ctvm = new ClientsTabViewModel(clientRepository, roomRepository, standardDialog);
             roomRepository.CreateDefaultRooms();
             ctvm.PropertyChanged += PropertyChangedHandler;
         }
@@ -71,6 +74,10 @@ namespace HotelSystem.Test
         }
         #endregion
 
+        private void DeleteStandardDialogFile()
+        {
+            File.Delete(standardDialog.Location);
+        }
 
         [Test]
         public void TestFilteredClientList()
@@ -93,6 +100,7 @@ namespace HotelSystem.Test
 
         }
 
+        #region TestAddClient
         [Test]
         public void TestAddClient()
         {
@@ -155,6 +163,9 @@ namespace HotelSystem.Test
 
         }
 
+        #endregion
+
+        #region TestChangeClient
         [Test]
         public void TestChangeClient_ChangedDataLastNameAndBirthDate()
         {
@@ -179,7 +190,7 @@ namespace HotelSystem.Test
             change.Execute(null);
 
             // Second validate
-            Assert.AreEqual(new Client() { Id = 8, FirstName = "Pietje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] },clientRepository.Clients[0]); 
+            Assert.AreEqual(new Client() { Id = 8, FirstName = "Pietje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] }, clientRepository.Clients[0]);
             AssertPropertyChanged(nameof(ctvm.Clients));
 
 
@@ -247,5 +258,36 @@ namespace HotelSystem.Test
 
 
         }
+        #endregion
+
+        #region TestExportClients
+        [Test]
+        public void TestExportClient_FileLocation()
+        {
+            // prepare
+            CreateDefaultClients();
+            standardDialog.Location = @"C:\temp\test123456.tsv";
+            DeleteStandardDialogFile();
+
+            // run
+            var export = ctvm.ExportClientsCommand;
+            var result = export.CanExecute(null);
+
+            // validate
+            Assert.IsTrue(result);
+
+            // second run
+            export.Execute(null);
+
+            // second validate
+            FileAssert.Exists(standardDialog.Location);
+        }
+
+        // c# convert string to stream 
+
+        // compare stream to stream
+
+        #endregion
+
     }
 }

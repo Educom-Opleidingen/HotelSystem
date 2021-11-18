@@ -217,9 +217,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\IStandardDialog.cs" />
     <Compile Include="View\RoomsTab.xaml.cs">
       <DependentUpon>RoomsTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\StandardDialog.cs" />
     <Page Include="View\ClientsTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
