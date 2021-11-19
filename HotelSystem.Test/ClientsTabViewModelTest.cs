@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-
+using System.Text;
 
 namespace HotelSystem.Test
 {
@@ -281,6 +281,19 @@ namespace HotelSystem.Test
 
             // second validate
             FileAssert.Exists(standardDialog.Location);
+            string actual = "FirstName\tLastName\tBirthdate\tAccount\tRoomNumber\r\n" +
+                            "Pietje\tPuk\t24/11/1914\tPukDynasty\t789\r\n" +
+                            "Agent\tLangdraad\t15/01/1903\tAgentenClub\t123\r\n" +
+                            "Bertus\tKromspijker\t24/02/1899\tPukDynasty\t456\r\n";
+
+            // convert string to stream
+            byte[] byteArray = Encoding.UTF8.GetBytes(actual);
+            //byte[] byteArray = Encoding.ASCII.GetBytes(contents);
+            MemoryStream actualExpectedStream = new MemoryStream(byteArray);
+
+
+            FileStream input = new FileStream(standardDialog.Location, FileMode.Open, FileAccess.Read);
+            FileAssert.AreEqual(actualExpectedStream, input);
         }
 
         // c# convert string to stream 
