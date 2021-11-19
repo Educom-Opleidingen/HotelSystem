@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.CommandWpf;
 using HotelSystem.DataLayer;
 using HotelSystem.Model;
+using HotelSystem.View;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace HotelSystem.ViewModel
 
         public IClientRepository ClientRepository { get; }
         public IRoomRepository RoomRepository { get; }
+        private IStandardDialog StandardDialog { get; }
+
         public Client ClientInfo 
         { 
             get => _clientInfo; 
@@ -45,12 +48,13 @@ namespace HotelSystem.ViewModel
         }
 
 
-        public ClientsTabViewModel(IClientRepository clientRepository, IRoomRepository roomRepository)
+        public ClientsTabViewModel(IClientRepository clientRepository, IRoomRepository roomRepository, IStandardDialog standardDialog)
         {
             ClientRepository = clientRepository;
             RefreshClientList();
 
             RoomRepository = roomRepository;
+            StandardDialog = standardDialog;
         }
 
         private void RefreshClientList()
@@ -160,37 +164,34 @@ namespace HotelSystem.ViewModel
                 () => SelectedClient != null));
 
         public ICommand ExportClientsCommand =>
-            _exportClientsCommand ??
-            (_exportClientsCommand = new RelayCommand(
-                () =>
-                {
-                    var clientsExport = ClientRepository.GetAllClients()
-                                                        .Select(client => new ClientExport
-                                                        {
-                                                            FirstName = client.FirstName,
-                                                            LastName = client.LastName,
-                                                            Birthdate = client.Birthdate.Value, // TODO Fix bug if client has no birthday
+           _exportClientsCommand ??
+           (_exportClientsCommand = new RelayCommand(
+               () =>
+               {
+                   var clientsExport = ClientRepository.GetAllClients()
+                                                       .Select(client => new ClientExport
+                                                       {
+                                                           FirstName = client.FirstName,
+                                                           LastName = client.LastName,
+                                                           Birthdate = client.Birthdate.Value, // TODO Fix bug if client has no birthday
                                                             Account = client.Account,
-                                                            RoomNumber = client.Room.Number
-                                                        });
+                                                           RoomNumber = client.Room.Number
+                                                       });
                     /* TODO move to seperate class */
-                    var saveDialog = new SaveFileDialog
-                    {
-                        DefaultExt = ".xls",
-                        Filter = "Excel table (.xls)|*.xls"
-                    };
-                    var result = saveDialog.ShowDialog();
-                    if (result == true)
-                    {
-                        using (TextWriter sw = new StreamWriter(saveDialog.FileName))
-                        {
-                            var reportCreator = new ReportCreator();
-                            reportCreator.WriteTsv(clientsExport, sw);
-                            sw.Close();
-                        }
-                    }
-                },
-                () => ClientRepository.HasClients()));
+                   string exportLocation = StandardDialog.GetExportFilename();
+                    /* TODO move to seperate class */
+                   if (exportLocation != null)
+                   {
+                       using (TextWriter sw = new StreamWriter(exportLocation))
+                       {
+                           var reportCreator = new ReportCreator();
+                           reportCreator.WriteTsv(clientsExport, sw);
+                           sw.Close();
+                       }
+                   }
+
+               },
+               () => ClientRepository.HasClients()));
 
         public RelayCommand<object> ResetFilterClientCommand =>
             _resetFilterClientCommand ??

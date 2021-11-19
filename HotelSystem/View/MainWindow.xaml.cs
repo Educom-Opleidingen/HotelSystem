@@ -1,6 +1,7 @@
 ﻿using HotelSystem.DataLayer;
 using HotelSystem.HotelDbContext;
 using HotelSystem.Model;
+using HotelSystem.View;
 using HotelSystem.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -30,8 +31,9 @@ namespace HotelSystem
             }
             ClientRepository clientRepository = new ClientRepository(Context);
             RoomRepository roomRepository = new RoomRepository(Context);
+            StandardDialog standardDialog = new StandardDialog();
 
-            ClientsTab.DataContext = new ClientsTabViewModel(clientRepository, roomRepository);
+            ClientsTab.DataContext = new ClientsTabViewModel(clientRepository, roomRepository, standardDialog);
             RoomsTab.DataContext = new RoomsTabViewModel(roomRepository);
         }
 

@@ -1,15 +1,25 @@
-﻿using HotelSystem.View;
+﻿using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace HotelSystem.Test
+namespace HotelSystem.View
 {
-    internal class TestStandardDialog : IStandardDialog
+    public class StandardDialog : IStandardDialog
     {
-        public string Location { get; set; }
-
         public string GetExportFilename()
         {
+            var saveDialog = new SaveFileDialog
+            {
+                DefaultExt = ".tsv",
+                Filter = "Excel table (.tsv)|*.tsv"
+            };
+            var result = saveDialog.ShowDialog();
+            var defaultLocation = result == true ? saveDialog.FileName : null;
 
-            return Location;
+            return defaultLocation;
         }
     }
 }
