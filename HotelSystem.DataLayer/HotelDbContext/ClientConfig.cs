@@ -1,4 +1,4 @@
-﻿using HotelSystem.Model;
+﻿using HotelSystem.DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

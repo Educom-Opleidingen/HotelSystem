@@ -1,4 +1,4 @@
-﻿namespace HotelSystem.Model
+﻿namespace HotelSystem.DataLayer.Models
 {
     public class Client : Person
     {

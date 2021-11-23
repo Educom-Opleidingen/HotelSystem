@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotelSystem.Model
+namespace HotelSystem.DataLayer.Models
 {
     public class Person : BaseModel
     {

@@ -1,4 +1,4 @@
-﻿using HotelSystem.Model;
+﻿using HotelSystem.DataLayer.Models;
 using HotelSystem.ViewModel;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;

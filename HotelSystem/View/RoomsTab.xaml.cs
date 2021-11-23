@@ -1,4 +1,4 @@
-﻿using HotelSystem.Model;
+﻿using HotelSystem.DataLayer.Models;
 using System;
 using System.Windows.Controls;
 

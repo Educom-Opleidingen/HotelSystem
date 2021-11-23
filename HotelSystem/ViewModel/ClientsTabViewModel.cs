@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using HotelSystem.DataLayer;
+using HotelSystem.DataLayer.Models;
 using HotelSystem.Model;
 using HotelSystem.View;
 using Microsoft.Win32;

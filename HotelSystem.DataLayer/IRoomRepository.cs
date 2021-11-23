@@ -1,4 +1,4 @@
-﻿using HotelSystem.Model;
+﻿using HotelSystem.DataLayer.Models;
 using System.Collections.Generic;
 
 namespace HotelSystem.DataLayer

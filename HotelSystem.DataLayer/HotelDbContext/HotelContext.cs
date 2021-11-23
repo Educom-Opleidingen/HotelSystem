@@ -1,4 +1,4 @@
-﻿using HotelSystem.Model;
+﻿using HotelSystem.DataLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelSystem.HotelDbContext

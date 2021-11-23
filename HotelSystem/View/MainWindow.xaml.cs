@@ -8,6 +8,7 @@ using System;
 using System.Configuration;
 using System.Linq;
 using System.Windows;
+using HotelSystem.DataLayer.Models;
 
 namespace HotelSystem
 {

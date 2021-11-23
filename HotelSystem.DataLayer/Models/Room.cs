@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HotelSystem.Model
+namespace HotelSystem.DataLayer.Models
 {
     public enum RoomTypes
     {
