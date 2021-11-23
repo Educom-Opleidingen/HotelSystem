@@ -1,20 +1,15 @@
 ﻿namespace HotelSystem.DataLayer.Models
 {
+    public enum ClientTypes
+    {
+        CorporateClient,
+        PrivateClient
+    }
+
     public class Client : Person
     {
-        private string _account;
         private Room _room;
-
-        public string Account
-        {
-            get => _account;
-            set
-            {
-                if (value == _account) return;
-                _account = value;
-                OnPropertyChanged();
-            }
-        }
+        private ClientTypes _type;
 
         public virtual Room Room
         {
@@ -27,6 +22,17 @@
             }
         }
 
+        public ClientTypes Type
+        {
+            get => _type;
+            set
+            {
+                if (value == _type) return;
+
+                _type = value;
+                OnPropertyChanged();
+            }
+        }
         public override bool Equals(object obj)
         {
             if (obj is Client)
@@ -41,13 +47,6 @@
                 {
                     return false;
                 }
-
-                if (otherClient.Account != Account)
-                {
-                    return false;
-                }
-
-                
 
                 return true;
             }
@@ -71,6 +70,7 @@
 
             return true;
         }
+
         public override int GetHashCode()
         {
             int hash = base.GetHashCode();
@@ -78,7 +78,6 @@
             unchecked // Overflow is fine, just wrap
             {
                 // Suitable nullity checks etc, of course :)
-                hash = hash * 6439 + Account?.GetHashCode() ?? 2515;
                 hash = hash * 973 + Room?.GetHashCode() ?? 9663;
             }
             return hash;

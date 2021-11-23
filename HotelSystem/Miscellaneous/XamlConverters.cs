@@ -19,6 +19,21 @@ namespace HotelSystem.Miscellaneous
         }
     }
 
+    public class ClientTypeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (int)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (ClientTypes)value;
+        }
+    }
+
+
+
     public class ResetFilterClientParametersConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

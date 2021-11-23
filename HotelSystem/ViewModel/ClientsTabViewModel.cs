@@ -261,17 +261,21 @@ namespace HotelSystem.ViewModel
                     {
                         queryResult = queryResult.Where(client => client.Birthdate == ClientFilter.Birthdate);
                     }
-                    if (!string.IsNullOrEmpty(ClientFilter.Account))
-                    {
-                        //var account = ClientFilter.Account.ToLowerInvariant();
-                        //queryResult = queryResult.Where(client => client.Account.Contains(account));
+                    // TODO Filter on ClientType. 
 
-                        queryResult = queryResult.Where(client => client.Account.IndexOf(ClientFilter.Account, StringComparison.CurrentCultureIgnoreCase) >= 0);
-                    }
+                    
+                    //if (!string.IsNullOrEmpty(ClientFilter.Account))
+                    //{
+                    //    //var account = ClientFilter.Account.ToLowerInvariant();
+                    //    //queryResult = queryResult.Where(client => client.Account.Contains(account));
+
+                    //    queryResult = queryResult.Where(client => client.Account.IndexOf(ClientFilter.Account, StringComparison.CurrentCultureIgnoreCase) >= 0);
+                    //}
                     if (ClientFilter.Room != null)
                     {
                         queryResult = queryResult.Where(client => client.Room == ClientFilter.Room);
                     }
+
                     FilteredClientList = queryResult?.ToList();
                 }));
 

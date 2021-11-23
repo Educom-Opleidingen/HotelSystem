@@ -8,6 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <misc:ClientTypeConverter x:Key="ClientTypeConverter"/>
         <misc:ResetFilterClientParametersConverter x:Key="ResetFilterClientConverter"/>
     </UserControl.Resources>
     <Grid>
@@ -21,7 +22,8 @@
                 <DataGridTextColumn Header="First name" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
                 <DataGridTextColumn Header="Birthdate" Binding="{Binding Path=Birthdate, StringFormat={}{0:dd\, MMMM\, yyyy}}"/>
-                <DataGridTextColumn Header="Account" Binding="{Binding Account}"/>
+                <DataGridTextColumn Header="Client Type" Binding="{Binding Type}"/>
+                <!-- <DataGridTextColumn Header="Account" Binding="{Binding Account}"/> -->
                 <DataGridTextColumn Header="Room number" Binding="{Binding Room.Number}"/>
             </DataGrid.Columns>
             <i:Interaction.Triggers>
@@ -57,7 +59,8 @@
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="3" Text="{Binding ClientInfo.FirstName, Mode=TwoWay}"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding ClientInfo.LastName, Mode=TwoWay}"/>
                 <DatePicker Grid.Row="2" Grid.Column="1" Margin="3" SelectedDate="{Binding ClientInfo.Birthdate, Mode=TwoWay}"/>
-                <TextBox Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding ClientInfo.Account, Mode=TwoWay}"/>
+                <ComboBox x:Name="ClientTypeCb" Grid.Row="1" Grid.Column="1" Margin="3" SelectedIndex="{Binding ClientInfo.Type, Mode=TwoWay, Converter={StaticResource ClientTypeConverter}}"/>
+                <!--<TextBox Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding ClientInfo.Account, Mode=TwoWay}"/>-->
                 <ComboBox Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Rooms}" SelectedItem="{Binding ClientInfo.Room, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -124,13 +127,20 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </DatePicker>
-                        <TextBox x:Name="AccTbFilter" Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding ClientFilter.Account, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox x:Name="CtCbFilter" Grid.Row="1" Grid.Column="1" Margin="3" SelectedItem="{Binding ClientFilter.Type}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding ClientsFilterChangedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <!--<TextBox x:Name="AccTbFilter" Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding ClientFilter.Account, UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="TextChanged">
                                     <i:InvokeCommandAction Command="{Binding ClientsFilterChangedCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
+                        </TextBox>-->
                         <ComboBox x:Name="RnCbFilter" Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Rooms}" SelectedItem="{Binding ClientFilter.Room}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
@@ -167,7 +177,8 @@
                                 <DataGridTextColumn Header="First name" Binding="{Binding FirstName}"/>
                                 <DataGridTextColumn Header="Last name" Binding="{Binding LastName}"/>
                                 <DataGridTextColumn Header="Birthdate" Binding="{Binding Path=Birthdate, StringFormat={}{0:dd\, MMMM\, yyyy}}"/>
-                                <DataGridTextColumn Header="Account" Binding="{Binding Account}"/>
+                                <DataGridTextColumn Header="Client Type" Binding="{Binding Type}"/>
+                                <!--<DataGridTextColumn Header="Account" Binding="{Binding Account}"/>-->
                                 <DataGridTextColumn Header="Room number" Binding="{Binding Room.Number}"/>
                             </DataGrid.Columns>
                         </DataGrid>
