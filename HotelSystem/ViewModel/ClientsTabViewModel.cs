@@ -173,7 +173,7 @@ namespace HotelSystem.ViewModel
                                                        {
                                                            FirstName = client.FirstName,
                                                            LastName = client.LastName,
-                                                           Birthdate = client.Birthdate.Value, // TODO Fix bug if client has no birthday
+                                                           Birthdate = Convert.ToDateTime(client.Birthdate), // TODO Fix bug if client has no birthday
                                                             Account = client.Account,
                                                            RoomNumber = client.Room.Number
                                                        });
