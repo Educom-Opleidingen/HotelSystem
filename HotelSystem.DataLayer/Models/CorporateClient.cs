@@ -6,6 +6,11 @@ namespace HotelSystem.DataLayer.Models
 {
     public class CorporateClient : Client
     {
+        public CorporateClient()
+        {
+            Type = ClientTypes.CorporateClient;
+        }
+
         private string _account;
 
         public string Account

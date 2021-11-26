@@ -99,15 +99,17 @@ namespace HotelSystem.ViewModel
                         FirstName = ClientInfo.FirstName,
                         LastName = ClientInfo.LastName,
                         Birthdate = ClientInfo.Birthdate,
-                        Account = ClientInfo.Account,
+                        //Account = ClientInfo.Account,
+                        Type = ClientInfo.Type,
                         Room = ClientInfo.Room
-                    });
+                    }) ;
                     RefreshClientList();
                 },
                 () =>
                 {
                     if (string.IsNullOrEmpty(ClientInfo.FirstName)
                         || string.IsNullOrEmpty(ClientInfo.LastName)
+                        || ClientInfo.Type == ClientTypes.None
                         || ClientInfo.Room == null)
                     {
                         return false;
@@ -117,6 +119,7 @@ namespace HotelSystem.ViewModel
                         return false;
                     }
 
+                    
                     return true;
                 }));
 
@@ -137,6 +140,7 @@ namespace HotelSystem.ViewModel
 
                     if (string.IsNullOrEmpty(ClientInfo.FirstName)
                         || string.IsNullOrEmpty(ClientInfo.LastName)
+                        || ClientInfo.Type == ClientTypes.None
                         || ClientInfo.Room == null)
                     {
                         return false;
@@ -175,7 +179,8 @@ namespace HotelSystem.ViewModel
                                                            FirstName = client.FirstName,
                                                            LastName = client.LastName,
                                                            Birthdate = client.Birthdate,
-                                                           Account = client.Account,
+                                                           // Account = client.Account,
+                                                           Type = client.Type,
                                                            RoomNumber = client.Room.Number
                                                        });
                     /* TODO move to seperate class */
@@ -199,24 +204,26 @@ namespace HotelSystem.ViewModel
             (_resetFilterClientCommand = new RelayCommand<object>(
                 parameters =>
                 {
-                    if (parameters is Tuple<TextBox, TextBox, DatePicker, TextBox, ComboBox> tuple)
+                    if (parameters is Tuple<TextBox, TextBox, DatePicker, ComboBox, ComboBox> tuple)
                     {
                         tuple.Item1.Text = string.Empty;
                         tuple.Item2.Text = string.Empty;
                         tuple.Item3.SelectedDate = null;
-                        tuple.Item4.Text = string.Empty;
+                        //tuple.Item4.Text = string.Empty;
+                        tuple.Item4.SelectedIndex = -1;
                         tuple.Item5.SelectedIndex = -1;
                     }
                 },
                 parameters =>
                 {
                     if (parameters == null) return false;
-                    if (parameters is Tuple<TextBox, TextBox, DatePicker, TextBox, ComboBox> tuple)
+                    if (parameters is Tuple<TextBox, TextBox, DatePicker, ComboBox, ComboBox> tuple)
                     {
                         if (string.IsNullOrEmpty(tuple.Item1.Text)
                             && string.IsNullOrEmpty(tuple.Item2.Text)
                             && tuple.Item3.SelectedDate == null
-                            && string.IsNullOrEmpty(tuple.Item4.Text)
+                            //&& string.IsNullOrEmpty(tuple.Item4.Text)
+                            && (tuple.Item4 == null || tuple.Item4.SelectedIndex == -1)
                             && (tuple.Item5 == null || tuple.Item5.SelectedIndex == -1))
                             return false;
                         return true;
@@ -233,7 +240,8 @@ namespace HotelSystem.ViewModel
                         ClientInfo.FirstName = SelectedClient.FirstName;
                         ClientInfo.LastName = SelectedClient.LastName;
                         ClientInfo.Birthdate = SelectedClient.Birthdate;
-                        ClientInfo.Account = SelectedClient.Account;
+                        //ClientInfo.Account = SelectedClient.Account;
+                        ClientInfo.Type = SelectedClient.Type;
                         ClientInfo.Room = SelectedClient.Room;
                     },
                     () => SelectedClient != null));
@@ -261,9 +269,13 @@ namespace HotelSystem.ViewModel
                     {
                         queryResult = queryResult.Where(client => client.Birthdate == ClientFilter.Birthdate);
                     }
-                    // TODO Filter on ClientType. 
 
-                    
+                    if (ClientFilter.Type != ClientTypes.None)
+                    {
+                        queryResult = queryResult.Where(client => client.Type == ClientFilter.Type);
+                    }
+
+
                     //if (!string.IsNullOrEmpty(ClientFilter.Account))
                     //{
                     //    //var account = ClientFilter.Account.ToLowerInvariant();

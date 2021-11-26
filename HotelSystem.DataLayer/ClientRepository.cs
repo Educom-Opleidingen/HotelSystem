@@ -37,7 +37,8 @@ namespace HotelSystem.DataLayer
             SelectedClient.FirstName = updatedInfo.FirstName;
             SelectedClient.LastName = updatedInfo.LastName;
             SelectedClient.Birthdate = updatedInfo.Birthdate;
-            SelectedClient.Account = updatedInfo.Account;
+            //SelectedClient.Account = updatedInfo.Account;
+            SelectedClient.Type = updatedInfo.Type;
             SelectedClient.Room = updatedInfo.Room;
             Context.SaveChanges();
         }

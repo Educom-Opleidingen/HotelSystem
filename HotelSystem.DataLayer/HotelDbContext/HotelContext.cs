@@ -8,6 +8,8 @@ namespace HotelSystem.HotelDbContext
         private readonly string _connectionString;
 
         public DbSet<Client> Clients { get; set; }
+        public DbSet<CorporateClient> CorporateClients { get; set; }
+        public DbSet<PrivateClient> PrivateClients { get; set; }
         public DbSet<Room> Rooms { get; set; }
 
         public HotelContext() : this(@"Server=(localdb)\mssqllocaldb;Database=HotelDB;Trusted_Connection=True;")
@@ -31,6 +33,8 @@ namespace HotelSystem.HotelDbContext
 
             modelBuilder.ApplyConfiguration(new PersonConfig());
             modelBuilder.ApplyConfiguration(new ClientConfig());
+            modelBuilder.ApplyConfiguration(new CorporateClientConfig());
+            modelBuilder.ApplyConfiguration(new PrivateClientConfig());
             modelBuilder.ApplyConfiguration(new RoomConfig());
         }
     }

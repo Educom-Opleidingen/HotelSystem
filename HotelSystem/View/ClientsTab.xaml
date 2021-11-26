@@ -59,7 +59,7 @@
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="3" Text="{Binding ClientInfo.FirstName, Mode=TwoWay}"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding ClientInfo.LastName, Mode=TwoWay}"/>
                 <DatePicker Grid.Row="2" Grid.Column="1" Margin="3" SelectedDate="{Binding ClientInfo.Birthdate, Mode=TwoWay}"/>
-                <ComboBox x:Name="ClientTypeCb" Grid.Row="1" Grid.Column="1" Margin="3" SelectedIndex="{Binding ClientInfo.Type, Mode=TwoWay, Converter={StaticResource ClientTypeConverter}}"/>
+                <ComboBox x:Name="ClientTypeCb" Grid.Row="3" Grid.Column="1" Margin="3" SelectedIndex="{Binding ClientInfo.Type, Mode=TwoWay, Converter={StaticResource ClientTypeConverter}}"/>
                 <!--<TextBox Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding ClientInfo.Account, Mode=TwoWay}"/>-->
                 <ComboBox Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Rooms}" SelectedItem="{Binding ClientInfo.Room, Mode=TwoWay}">
                     <ComboBox.ItemTemplate>
@@ -127,7 +127,7 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </DatePicker>
-                        <ComboBox x:Name="CtCbFilter" Grid.Row="1" Grid.Column="1" Margin="3" SelectedItem="{Binding ClientFilter.Type}">
+                        <ComboBox x:Name="CtCbFilter" Grid.Row="3" Grid.Column="1" Margin="3" SelectedItem="{Binding ClientFilter.Type}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ClientsFilterChangedCommand}"/>
@@ -166,7 +166,8 @@
                                     <Binding ElementName="FnTbFilter"/>
                                     <Binding ElementName="LnTbFilter"/>
                                     <Binding ElementName="BdDpFilter"/>
-                                    <Binding ElementName="AccTbFilter"/>
+                                    <Binding ElementName="CtCbFilter"/>
+                                    <!-- <Binding ElementName="AccTbFilter"/> -->
                                     <Binding ElementName="RnCbFilter"/>
                                 </MultiBinding>
                             </Button.CommandParameter>

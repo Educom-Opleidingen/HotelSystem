@@ -68,9 +68,9 @@ namespace HotelSystem.Test
 
         private void CreateDefaultClients()
         {
-            clientRepository.Clients.Add(new Client() { Id = 8, FirstName = "Pietje", LastName = "Puk", Birthdate = new DateTime(1914, 11, 24), Account = "PukDynasty", Room = roomRepository.Rooms[2] });
-            clientRepository.Clients.Add(new Client() { Id = 9, FirstName = "Agent", LastName = "Langdraad", Birthdate = new DateTime(1903, 01, 15), Account = "AgentenClub", Room = roomRepository.Rooms[0] });
-            clientRepository.Clients.Add(new Client() { Id = 10, FirstName = "Bertus", LastName = "Kromspijker", Birthdate = new DateTime(1899, 02, 24), Account = "PukDynasty", Room = roomRepository.Rooms[1] });
+            clientRepository.Clients.Add(new CorporateClient() { Id = 8, FirstName = "Pietje", LastName = "Puk", Birthdate = new DateTime(1914, 11, 24), Account = "PukDynasty", Room = roomRepository.Rooms[2] });
+            clientRepository.Clients.Add(new CorporateClient() { Id = 9, FirstName = "Agent", LastName = "Langdraad", Birthdate = new DateTime(1903, 01, 15), Account = "AgentenClub", Room = roomRepository.Rooms[0] });
+            clientRepository.Clients.Add(new CorporateClient() { Id = 10, FirstName = "Bertus", LastName = "Kromspijker", Birthdate = new DateTime(1899, 02, 24), Account = "PukDynasty", Room = roomRepository.Rooms[1] });
         }
         #endregion
 
@@ -105,7 +105,7 @@ namespace HotelSystem.Test
         public void TestAddClient()
         {
             // prepare
-            Client testClient = new Client() { Id = 20, FirstName = "Nina", LastName = "de Ruiter", Birthdate = new DateTime(2012, 04, 04), Account = "BlokkenBouwClub", Room = roomRepository.Rooms[0] };
+            Client testClient = new CorporateClient() { Id = 20, FirstName = "Nina", LastName = "de Ruiter", Birthdate = new DateTime(2012, 04, 04), Account = "BlokkenBouwClub", Room = roomRepository.Rooms[0] };
 
             // run
             ctvm.ClientInfo = testClient;
@@ -145,7 +145,7 @@ namespace HotelSystem.Test
             // prepare
             CreateDefaultClients();
 
-            Client testClient = new Client() { Id = 8, FirstName = "Pietje", LastName = "Puk", Birthdate = new DateTime(1914, 11, 24), Account = "PukDynasty", Room = roomRepository.Rooms[2] };
+            CorporateClient testClient = new CorporateClient() { Id = 8, FirstName = "Pietje", LastName = "Puk", Birthdate = new DateTime(1914, 11, 24), Account = "PukDynasty", Room = roomRepository.Rooms[2] };
             var selectedClient = clientRepository.Clients[0];
             ctvm.SelectedClient = selectedClient;
             propertyChanges.Clear();
@@ -172,7 +172,7 @@ namespace HotelSystem.Test
             // prepare
             CreateDefaultClients();
 
-            Client newClientInfo = new Client() { Id = 8, FirstName = "Pietje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] };
+            CorporateClient newClientInfo = new CorporateClient() { Id = 8, FirstName = "Pietje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] };
             var selectedClient = clientRepository.Clients[0];
             ctvm.SelectedClient = selectedClient;
             propertyChanges.Clear();
@@ -190,7 +190,7 @@ namespace HotelSystem.Test
             change.Execute(null);
 
             // Second validate
-            Assert.AreEqual(new Client() { Id = 8, FirstName = "Pietje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] }, clientRepository.Clients[0]);
+            Assert.AreEqual(new CorporateClient() { Id = 8, FirstName = "Pietje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] }, clientRepository.Clients[0]);
             AssertPropertyChanged(nameof(ctvm.Clients));
 
 
@@ -202,7 +202,7 @@ namespace HotelSystem.Test
             // prepare
             CreateDefaultClients();
 
-            Client newClientInfo = new Client() { Id = 8, FirstName = "Pietje", LastName = "Puk", Birthdate = new DateTime(1914, 11, 24), Account = "PukDynasty", Room = roomRepository.Rooms[2] };
+            CorporateClient newClientInfo = new CorporateClient() { Id = 8, FirstName = "Pietje", LastName = "Puk", Birthdate = new DateTime(1914, 11, 24), Account = "PukDynasty", Room = roomRepository.Rooms[2] };
             var selectedClient = clientRepository.Clients[0];
 
             ctvm.SelectedClient = selectedClient;
@@ -224,8 +224,8 @@ namespace HotelSystem.Test
             // prepare
             CreateDefaultClients();
 
-            Client changedClientInfo = new Client() { Id = 50, FirstName = "Jantje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] };
-            var unSelectedClient = new Client() { Id = 50, FirstName = "Elsje", LastName = "Schaap", Birthdate = new DateTime(1914, 03, 24), Account = "PukDynasty", Room = roomRepository.Rooms[1] };
+            CorporateClient changedClientInfo = new CorporateClient() { Id = 50, FirstName = "Jantje", LastName = "Kup", Birthdate = new DateTime(1914, 04, 24), Account = "PukDynasty", Room = roomRepository.Rooms[0] };
+            var unSelectedClient = new CorporateClient() { Id = 50, FirstName = "Elsje", LastName = "Schaap", Birthdate = new DateTime(1914, 03, 24), Account = "PukDynasty", Room = roomRepository.Rooms[1] };
             ctvm.SelectedClient = unSelectedClient;
             propertyChanges.Clear();
 

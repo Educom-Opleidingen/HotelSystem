@@ -21,7 +21,8 @@ namespace HotelSystem.Test
             selectedClient.FirstName = updatedInfo.FirstName;
             selectedClient.LastName = updatedInfo.LastName;
             selectedClient.Birthdate = updatedInfo.Birthdate;
-            selectedClient.Account = updatedInfo.Account;
+            //selectedClient.Account = updatedInfo.Account;
+            selectedClient.Type = updatedInfo.Type;
             selectedClient.Room = updatedInfo.Room;
         }
 

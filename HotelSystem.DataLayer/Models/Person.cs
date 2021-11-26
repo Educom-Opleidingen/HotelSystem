@@ -7,6 +7,7 @@ namespace HotelSystem.DataLayer.Models
         private string _firstName;
         private string _lastName;
         private DateTime? _birthdate;
+        private ClientTypes _type;
 
         public string FirstName
         {
@@ -37,6 +38,18 @@ namespace HotelSystem.DataLayer.Models
             {
                 if (value.Equals(_birthdate)) return;
                 _birthdate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ClientTypes Type
+        {
+            get => _type;
+            set
+            {
+                if (value == _type) return;
+
+                _type = value;
                 OnPropertyChanged();
             }
         }

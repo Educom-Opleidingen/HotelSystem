@@ -2,6 +2,7 @@
 {
     public enum ClientTypes
     {
+        None,
         CorporateClient,
         PrivateClient
     }
@@ -9,7 +10,7 @@
     public class Client : Person
     {
         private Room _room;
-        private ClientTypes _type;
+        
 
         public virtual Room Room
         {
@@ -22,17 +23,6 @@
             }
         }
 
-        public ClientTypes Type
-        {
-            get => _type;
-            set
-            {
-                if (value == _type) return;
-
-                _type = value;
-                OnPropertyChanged();
-            }
-        }
         public override bool Equals(object obj)
         {
             if (obj is Client)

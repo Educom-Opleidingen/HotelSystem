@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20211126103435_IntroducedSubClasses.cs" />
+    <Compile Remove="Migrations\20211126103435_IntroducedSubClasses.Designer.cs" />
+    <Compile Remove="Migrations\20211126104026_IntroducedSubClasses.cs" />
+    <Compile Remove="Migrations\20211126104026_IntroducedSubClasses.Designer.cs" />
+    <Compile Remove="Migrations\20211126104649_IntroducedSubClasses.cs" />
+    <Compile Remove="Migrations\20211126104649_IntroducedSubClasses.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.17">
       <PrivateAssets>all</PrivateAssets>

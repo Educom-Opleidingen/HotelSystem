@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using HotelSystem.DataLayer.Models;
+using System;
+using System.Windows.Controls;
 
 namespace HotelSystem.View
 {
@@ -10,6 +12,8 @@ namespace HotelSystem.View
         public ClientsTab()
         {
             InitializeComponent();
+            ClientTypeCb.ItemsSource = CtCbFilter.ItemsSource = Enum.GetNames(typeof(ClientTypes));
         }
+
     }
 }

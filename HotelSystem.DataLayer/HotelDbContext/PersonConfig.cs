@@ -13,6 +13,10 @@ namespace HotelSystem.HotelDbContext
             builder.Property(person => person.LastName).IsRequired().HasMaxLength(50);
             builder.Property(person => person.Birthdate).HasColumnType("datetime2").IsRequired(false);
 
+            //builder.HasDiscriminator(client => client.Type)
+            //        .HasValue<CorporateClient>(ClientTypes.CorporateClient)
+            //        .HasValue<PrivateClient>(ClientTypes.PrivateClient);
+
             builder.ToTable("People");
         }
     }

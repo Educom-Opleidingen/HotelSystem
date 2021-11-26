@@ -38,8 +38,8 @@ namespace HotelSystem.Miscellaneous
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return new Tuple<TextBox, TextBox, DatePicker, TextBox, ComboBox>(values[0] as TextBox,
-                values[1] as TextBox, values[2] as DatePicker, values[3] as TextBox, values[4] as ComboBox);
+            return new Tuple<TextBox, TextBox, DatePicker, ComboBox, ComboBox>(values[0] as TextBox,
+                values[1] as TextBox, values[2] as DatePicker, values[3] as ComboBox, values[4] as ComboBox);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
