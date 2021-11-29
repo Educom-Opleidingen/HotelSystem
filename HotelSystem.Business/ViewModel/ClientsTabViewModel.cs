@@ -1,10 +1,10 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using HotelSystem.BusinessLayer.Model;
+using HotelSystem.BusinessLayer.Reporting;
+using HotelSystem.BusinessLayer.View;
 using HotelSystem.DataLayer;
 using HotelSystem.DataLayer.Models;
-using HotelSystem.Model;
-using HotelSystem.View;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace HotelSystem.ViewModel
+namespace HotelSystem.BusinessLayer.ViewModel
 {
     public class ClientsTabViewModel : ViewModelBase
     {
@@ -25,15 +25,15 @@ namespace HotelSystem.ViewModel
         public IRoomRepository RoomRepository { get; }
         private IStandardDialog StandardDialog { get; }
 
-        public Client ClientInfo 
-        { 
-            get => _clientInfo; 
+        public Client ClientInfo
+        {
+            get => _clientInfo;
             set
             {
                 _clientInfo = value;
-                (AddClientCommand as RelayCommand).RaiseCanExecuteChanged(); 
-                
-            } 
+                (AddClientCommand as RelayCommand).RaiseCanExecuteChanged();
+
+            }
         }
         public Client ClientFilter { get; set; } = new Client();
         public Client SelectedClient { get; set; }
@@ -87,7 +87,7 @@ namespace HotelSystem.ViewModel
         private RelayCommand<object> _resetFilterClientCommand;
         private RelayCommand _clientsGridSelectionChangedCommand;
         private RelayCommand _clientsFilterChangedCommand;
-        
+
 
         public ICommand AddClientCommand =>
             _addClientCommand ??
@@ -102,7 +102,7 @@ namespace HotelSystem.ViewModel
                         //Account = ClientInfo.Account,
                         Type = ClientInfo.Type,
                         Room = ClientInfo.Room
-                    }) ;
+                    });
                     RefreshClientList();
                 },
                 () =>
@@ -119,7 +119,7 @@ namespace HotelSystem.ViewModel
                         return false;
                     }
 
-                    
+
                     return true;
                 }));
 
@@ -183,9 +183,9 @@ namespace HotelSystem.ViewModel
                                                            Type = client.Type,
                                                            RoomNumber = client.Room.Number
                                                        });
-                    /* TODO move to seperate class */
+                   /* TODO move to seperate class */
                    string exportLocation = StandardDialog.GetExportFilename();
-                    /* TODO move to seperate class */
+                   /* TODO move to seperate class */
                    if (exportLocation != null)
                    {
                        using (TextWriter sw = new StreamWriter(exportLocation))

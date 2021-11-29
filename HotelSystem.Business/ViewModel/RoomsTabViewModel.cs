@@ -9,7 +9,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace HotelSystem.ViewModel
+namespace HotelSystem.BusinessLayer.ViewModel
 {
     public class RoomsTabViewModel : ViewModelBase
     {
@@ -114,7 +114,7 @@ namespace HotelSystem.ViewModel
                         return false;
                     }
                     if (SelectedRoom.Equals(RoomInfo))
-                    { 
+                    {
                         return false;
                     }
                     if (!Rooms.Any(room => room.Id == SelectedRoom.Id))
@@ -144,7 +144,7 @@ namespace HotelSystem.ViewModel
                         return false;
                     }
                     return true;
-                    }));
+                }));
 
 
         public RelayCommand<object> ResetFilterRoomCommand =>

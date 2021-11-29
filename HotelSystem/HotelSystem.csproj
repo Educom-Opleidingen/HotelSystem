@@ -217,7 +217,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="View\IStandardDialog.cs" />
     <Compile Include="View\RoomsTab.xaml.cs">
       <DependentUpon>RoomsTab.xaml</DependentUpon>
     </Compile>
@@ -235,10 +234,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Miscellaneous\XamlConverters.cs" />
-    <Compile Include="ReportCreator.cs" />
-    <Compile Include="Model\ClientExport.cs" />
-    <Compile Include="ViewModel\ClientsTabViewModel.cs" />
-    <Compile Include="ViewModel\RoomsTabViewModel.cs" />
     <Compile Include="View\ClientsTab.xaml.cs">
       <DependentUpon>ClientsTab.xaml</DependentUpon>
     </Compile>
@@ -297,6 +292,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\HotelSystem.Business\HotelSystem.BusinessLayer.csproj">
+      <Project>{31547FD4-4DBC-4DE1-981B-197D88BBA22D}</Project>
+      <Name>HotelSystem.BusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HotelSystem.DataLayer\HotelSystem.DataLayer.csproj">
       <Project>{de79d60e-6aae-46e0-919b-d91590be8454}</Project>
       <Name>HotelSystem.DataLayer</Name>

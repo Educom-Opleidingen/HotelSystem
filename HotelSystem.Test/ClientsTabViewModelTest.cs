@@ -1,5 +1,5 @@
 ﻿using HotelSystem.DataLayer.Models;
-using HotelSystem.ViewModel;
+using HotelSystem.BusinessLayer.ViewModel;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using System;

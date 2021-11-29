@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 
-namespace HotelSystem
+namespace HotelSystem.BusinessLayer.Reporting
 {
     public class ReportCreator
     {
@@ -16,7 +16,7 @@ namespace HotelSystem
 
             //foreach (PropertyDescriptor prop in props)
             //{
-                
+
 
             //    output.Write(prop.DisplayName); // header
             //    output.Write("\t"); // too many tabs

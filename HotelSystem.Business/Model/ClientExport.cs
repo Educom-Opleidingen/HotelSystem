@@ -1,7 +1,7 @@
 ﻿using System;
 using HotelSystem.DataLayer.Models;
 
-namespace HotelSystem.Model
+namespace HotelSystem.BusinessLayer.Model
 {
     internal class ClientExport
     {

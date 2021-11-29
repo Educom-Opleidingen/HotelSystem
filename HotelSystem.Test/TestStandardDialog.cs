@@ -1,4 +1,4 @@
-﻿using HotelSystem.View;
+﻿using HotelSystem.BusinessLayer.View;
 
 namespace HotelSystem.Test
 {

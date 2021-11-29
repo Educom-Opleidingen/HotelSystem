@@ -1,8 +1,7 @@
 ﻿using HotelSystem.DataLayer;
 using HotelSystem.HotelDbContext;
-using HotelSystem.Model;
 using HotelSystem.View;
-using HotelSystem.ViewModel;
+using HotelSystem.BusinessLayer.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Configuration;

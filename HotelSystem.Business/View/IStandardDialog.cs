@@ -1,4 +1,4 @@
-﻿namespace HotelSystem.View
+﻿namespace HotelSystem.BusinessLayer.View
 {
     public interface IStandardDialog
     {
